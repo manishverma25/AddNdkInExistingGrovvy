@@ -1,6 +1,7 @@
 package com.example.sample1
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        jniData = stringFromJNI()
+        Log.d("mvv"," stringFromJNI  $jniData")
+
         binding = ActivityMainBinding.inflate(layoutInflater)  //AddNdkInExistingGrovvy
         setContentView(binding.root)
 
@@ -31,6 +35,25 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+    }
+
+
+
+
+    /**
+     * A native method that is implemented by the 'nativecsample' native library,
+     * which is packaged with this application.
+     */
+    external fun stringFromJNI(): String
+
+    var jniData = ""
+
+    companion object {
+        // Used to load the 'nativecsample' library on application startup.
+        init {
+            System.loadLibrary("jni-project-name")
+
         }
     }
 
@@ -55,4 +78,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+
 }
