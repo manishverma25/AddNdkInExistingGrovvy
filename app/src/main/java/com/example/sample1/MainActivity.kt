@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        jniData = stringFromJNI()
+        jniData = stringFromJNI() +stringFromJNI2()
         Log.d("mvv"," stringFromJNI  $jniData")
 
         binding = ActivityMainBinding.inflate(layoutInflater)  //AddNdkInExistingGrovvy
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
     external fun stringFromJNI(): String
+    external fun stringFromJNI2(): String
 
     var jniData = ""
 
