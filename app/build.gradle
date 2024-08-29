@@ -33,31 +33,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    flavorDimensions "version"
-
-    productFlavors {
-        production {
-//            resValue "string", "app_name_lite", "Dynamic Times Prime Lite"
-            resValue "string", "app_name", "Times Prime"
-            resValue "string", "staleness_days", "7"
-
-        }
-        dynamic {
-//            resValue "string", "app_name", "Dynamic Times Prime"
-            resValue "string", "app_name_lite", "Dynamic Times Prime Lite"
-            resValue "string", "staleness_days", "0"
-        }
-
-
-        all { flavor ->
-            task("${flavor.name}GoogleServices", type: Copy) {
-                description = 'Switches to  depending on flavor'
-                from "src/${flavor.name}"
-                include "ApiEndPoints.kt"
-                into "."
-            }
-        }
-    }
 
 
     // Encapsulates your external native build configurations.
@@ -89,52 +64,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
-
-
- afterEvaluate {
-     android.productFlavors.all {
-         flavor ->
-//             tasks."generate${flavor.name.capitalize()}DebugResources".dependsOn "${flavor.name}GoogleServices"
-             tasks."generate${flavor.name.capitalize()}ReleaseResources".dependsOn "${flavor.name}GoogleServices"
-     }
- }
-
-
-
-
-//
-// afterEvaluate {
-//     android.applicationVariants.all { variant ->
-//         def flavorName = variant.flavorName.capitalize()
-//         def buildType = variant.buildType.name.capitalize()
-//         def variantName = variant.name.capitalize()
-//
-//         // Task for the specific flavor
-//         tasks "customTask${flavorName}${buildType}" {
-//             group = "custom"
-//             description = "Runs a custom task for ${flavorName} and ${buildType}"
-//
-//             doLast {
-//                 println "Running custom task for ${flavorName}${buildType}"
-//             }
-//         }
-//
-//         // Make the task dependent on assemble
-//         tasks["assemble${variantName}"].dependsOn "customTask${flavorName}${buildType}"
-//
-//         println "Running custom task variantName ${variantName}"
-//         println "Running custom task flavorName ${flavorName}"
-//         println "Running custom task buildType ${buildType}"
-//     }
-// }
-//
-// android.buildTypes.all{ theBuildType ->
-//     tasks ("${theBuildType.name}MyCustomTask")<<{
-//         //use debuggable flag
-//         println "!!!!! theBuildType.name  ${theBuildType.name}"
-////         println theBuildType.debuggable
-//     }
-// }
-
-
-
